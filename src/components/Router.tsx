@@ -2,6 +2,14 @@ import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
+import { MemberProtectedRoute } from '@/components/ui/member-protected-route';
+
+import HomePage from '@/components/pages/HomePage';
+import LoginPage from '@/components/pages/LoginPage';
+import DashboardPage from '@/components/pages/DashboardPage';
+import PatientDetailPage from '@/components/pages/PatientDetailPage';
+import PatientPortalPage from '@/components/pages/PatientPortalPage';
+import ProfilePage from '@/components/pages/ProfilePage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -21,9 +29,56 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Wix Vibe</div>,
+        element: <HomePage />,
         routeMetadata: {
           pageIdentifier: 'home',
+        },
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+        routeMetadata: {
+          pageIdentifier: 'login',
+        },
+      },
+      {
+        path: "dashboard",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to access patient records">
+            <DashboardPage />
+          </MemberProtectedRoute>
+        ),
+        routeMetadata: {
+          pageIdentifier: 'dashboard',
+        },
+      },
+      {
+        path: "patient/:id",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to view patient details">
+            <PatientDetailPage />
+          </MemberProtectedRoute>
+        ),
+        routeMetadata: {
+          pageIdentifier: 'patient-detail',
+        },
+      },
+      {
+        path: "patient-portal",
+        element: <PatientPortalPage />,
+        routeMetadata: {
+          pageIdentifier: 'patient-portal',
+        },
+      },
+      {
+        path: "profile",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to view your profile">
+            <ProfilePage />
+          </MemberProtectedRoute>
+        ),
+        routeMetadata: {
+          pageIdentifier: 'profile',
         },
       },
       {
