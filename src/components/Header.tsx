@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Sparkles } from 'lucide-react';
 import { useMember } from '@/integrations';
 
 export default function Header() {
@@ -27,6 +27,13 @@ export default function Header() {
             {!isAuthenticated && !isLoading && (
               <>
                 <Link 
+                  to="/ai-assistant" 
+                  className="flex items-center gap-2 font-paragraph text-base text-secondary hover:text-primary transition-colors"
+                >
+                  <Sparkles size={18} />
+                  AI Assistant
+                </Link>
+                <Link 
                   to="/login" 
                   className="font-paragraph text-base text-secondary hover:text-primary transition-colors"
                 >
@@ -42,6 +49,13 @@ export default function Header() {
 
             {isAuthenticated && (
               <>
+                <Link 
+                  to="/ai-assistant" 
+                  className="flex items-center gap-2 font-paragraph text-base text-secondary hover:text-primary transition-colors"
+                >
+                  <Sparkles size={18} />
+                  AI Assistant
+                </Link>
                 <Link 
                   to="/dashboard" 
                   className="font-paragraph text-base text-secondary hover:text-primary transition-colors"

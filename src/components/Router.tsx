@@ -10,6 +10,7 @@ import DashboardPage from '@/components/pages/DashboardPage';
 import PatientDetailPage from '@/components/pages/PatientDetailPage';
 import PatientPortalPage from '@/components/pages/PatientPortalPage';
 import ProfilePage from '@/components/pages/ProfilePage';
+import AIAssistantPage from '@/components/pages/AIAssistantPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -79,6 +80,13 @@ const router = createBrowserRouter([
         ),
         routeMetadata: {
           pageIdentifier: 'profile',
+        },
+      },
+      {
+        path: "ai-assistant",
+        element: <AIAssistantPage />,
+        routeMetadata: {
+          pageIdentifier: 'ai-assistant',
         },
       },
       {
