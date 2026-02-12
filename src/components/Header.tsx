@@ -39,6 +39,12 @@ export default function Header() {
                 >
                   Login
                 </Link>
+                <Link 
+                  to="/lab-login" 
+                  className="font-paragraph text-base text-secondary hover:text-primary transition-colors"
+                >
+                  Lab Login
+                </Link>
                 <Link to="/patient-portal">
                   <button className="bg-primary text-primary-foreground font-paragraph text-sm px-6 py-3 hover:bg-accentbluelight transition-colors">
                     Patient Portal

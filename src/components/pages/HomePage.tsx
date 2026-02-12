@@ -42,8 +42,8 @@ const ROLES_DATA = [
     icon: Stethoscope
   },
   { 
-    role: 'Lab Professionals', 
-    access: 'Upload lab reports and view relevant patient information.',
+    role: 'Lab Technicians', 
+    access: 'Upload lab reports, manage test results, and access patient sample information.',
     icon: Activity
   },
   { 
@@ -92,15 +92,26 @@ export default function HomePage() {
               Amplify your medical practice with data-driven management solutions. Streamline patient care with comprehensive digital health records.
             </p>
 
-            <Link to="/login" className="inline-block group">
-              <motion.button
-                className="bg-primary text-white font-heading text-sm tracking-widest uppercase px-10 py-5 hover:bg-accentbluelight transition-all duration-300 flex items-center gap-3"
-                whileHover={{ gap: '20px' }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Access System <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/login" className="inline-block group">
+                <motion.button
+                  className="bg-primary text-white font-heading text-sm tracking-widest uppercase px-10 py-5 hover:bg-accentbluelight transition-all duration-300 flex items-center gap-3"
+                  whileHover={{ gap: '20px' }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Healthcare Login <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </Link>
+              <Link to="/lab-login" className="inline-block group">
+                <motion.button
+                  className="bg-secondary text-white font-heading text-sm tracking-widest uppercase px-10 py-5 hover:bg-primary transition-all duration-300 flex items-center gap-3"
+                  whileHover={{ gap: '20px' }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Lab Login <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </Link>
+            </div>
           </motion.div>
         </div>
 

@@ -11,6 +11,8 @@ import PatientDetailPage from '@/components/pages/PatientDetailPage';
 import PatientPortalPage from '@/components/pages/PatientPortalPage';
 import ProfilePage from '@/components/pages/ProfilePage';
 import AIAssistantPage from '@/components/pages/AIAssistantPage';
+import LabTechnicianLoginPage from '@/components/pages/LabTechnicianLoginPage';
+import LabDashboardPage from '@/components/pages/LabDashboardPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -87,6 +89,24 @@ const router = createBrowserRouter([
         element: <AIAssistantPage />,
         routeMetadata: {
           pageIdentifier: 'ai-assistant',
+        },
+      },
+      {
+        path: "lab-login",
+        element: <LabTechnicianLoginPage />,
+        routeMetadata: {
+          pageIdentifier: 'lab-login',
+        },
+      },
+      {
+        path: "lab-dashboard",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to access lab dashboard">
+            <LabDashboardPage />
+          </MemberProtectedRoute>
+        ),
+        routeMetadata: {
+          pageIdentifier: 'lab-dashboard',
         },
       },
       {
