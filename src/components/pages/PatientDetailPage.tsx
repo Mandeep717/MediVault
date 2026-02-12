@@ -40,9 +40,14 @@ export default function PatientDetailPage() {
       BaseCrudService.getAll<LabReports>('labreports')
     ]);
 
-    setTreatmentPlans(treatmentsResult.items);
-    setPrescriptions(prescriptionsResult.items);
-    setLabReports(labsResult.items);
+    // Filter records by patientId
+    const patientTreatments = treatmentsResult.items.filter(t => t.patientId === id);
+    const patientPrescriptions = prescriptionsResult.items.filter(p => p.patientId === id);
+    const patientLabs = labsResult.items.filter(l => l.patientId === id);
+
+    setTreatmentPlans(patientTreatments);
+    setPrescriptions(patientPrescriptions);
+    setLabReports(patientLabs);
     setIsLoading(false);
   };
 
@@ -401,6 +406,7 @@ export default function PatientDetailPage() {
 }
 
 function TreatmentPlanForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
+  const { id } = useParams<{ id: string }>();
   const [formData, setFormData] = useState({
     planName: '',
     planType: '',
@@ -415,7 +421,8 @@ function TreatmentPlanForm({ onClose, onSuccess }: { onClose: () => void; onSucc
     e.preventDefault();
     await BaseCrudService.create('treatmentplans', {
       _id: crypto.randomUUID(),
-      ...formData
+      ...formData,
+      patientId: id
     });
     onSuccess();
   };
@@ -536,6 +543,7 @@ function TreatmentPlanForm({ onClose, onSuccess }: { onClose: () => void; onSucc
 }
 
 function PrescriptionForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
+  const { id } = useParams<{ id: string }>();
   const [formData, setFormData] = useState({
     drugName: '',
     dosage: '',
@@ -551,7 +559,8 @@ function PrescriptionForm({ onClose, onSuccess }: { onClose: () => void; onSucce
     await BaseCrudService.create('prescriptions', {
       _id: crypto.randomUUID(),
       ...formData,
-      refillsAllowed: Number(formData.refillsAllowed)
+      refillsAllowed: Number(formData.refillsAllowed),
+      patientId: id
     });
     onSuccess();
   };
@@ -680,6 +689,7 @@ function PrescriptionForm({ onClose, onSuccess }: { onClose: () => void; onSucce
 }
 
 function LabReportForm({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
+  const { id } = useParams<{ id: string }>();
   const [formData, setFormData] = useState({
     reportName: '',
     testType: '',
@@ -694,7 +704,8 @@ function LabReportForm({ onClose, onSuccess }: { onClose: () => void; onSuccess:
     e.preventDefault();
     await BaseCrudService.create('labreports', {
       _id: crypto.randomUUID(),
-      ...formData
+      ...formData,
+      patientId: id
     });
     onSuccess();
   };

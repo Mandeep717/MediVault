@@ -12,6 +12,8 @@ export interface LabReports {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  patientId?: string;
+  /** @wixFieldType text */
   reportName?: string;
   /** @wixFieldType text */
   testType?: string;
@@ -62,6 +64,8 @@ export interface Prescriptions {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  patientId?: string;
+  /** @wixFieldType text */
   drugName?: string;
   /** @wixFieldType text */
   dosage?: string;
@@ -86,6 +90,8 @@ export interface TreatmentPlans {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
+  /** @wixFieldType text */
+  patientId?: string;
   /** @wixFieldType text */
   planName?: string;
   /** @wixFieldType text */
