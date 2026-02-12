@@ -1,6 +1,6 @@
-# Wixstro - Wix Astro Template
+# MediVault
 
-A modern, full-featured Wix Astro template built with React, TypeScript, and Tailwind CSS. 
+This project is a web-based patient-centric clinical workflow and coordination system designed to improve communication and task management between hospital departments such as doctors, nurses, pharmacies, and diagnostic units
 
 ## 🚀 Features
 
