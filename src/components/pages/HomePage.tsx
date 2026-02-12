@@ -27,12 +27,6 @@ const FEATURES_DATA = [
     description: 'Upload and manage laboratory test results with detailed summaries, ensuring seamless integration with patient health records.',
     icon: FileText,
   },
-  {
-    id: '04',
-    title: 'AI Health Assistant',
-    description: 'Get AI-powered symptom analysis and personalized treatment suggestions for both patients and healthcare professionals.',
-    icon: Stethoscope,
-  }
 ];
 
 const ROLES_DATA = [
