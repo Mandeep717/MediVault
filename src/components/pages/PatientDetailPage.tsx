@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Plus, FileText, Pill, ClipboardList, CheckCircle2, Circle, Upload } from 'lucide-react';
+import { ArrowLeft, Plus, FileText, Pill, ClipboardList, CheckCircle2, Circle, Upload, Edit2, Save, X } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { Patients, TreatmentPlans, Prescriptions, LabReports } from '@/entities';
 import Header from '@/components/Header';
@@ -22,6 +22,8 @@ export default function PatientDetailPage() {
   const [showTreatmentForm, setShowTreatmentForm] = useState(false);
   const [showPrescriptionForm, setShowPrescriptionForm] = useState(false);
   const [showLabReportForm, setShowLabReportForm] = useState(false);
+  const [isEditingComplications, setIsEditingComplications] = useState(false);
+  const [editedComplications, setEditedComplications] = useState('');
 
   useEffect(() => {
     loadPatientData();
@@ -33,6 +35,9 @@ export default function PatientDetailPage() {
     setIsLoading(true);
     const patientData = await BaseCrudService.getById<Patients>('patients', id);
     setPatient(patientData);
+    setEditedComplications(patientData?.currentComplications || '');
+
+    // ... keep existing code (fetch treatment plans, prescriptions, labs)
 
     const [treatmentsResult, prescriptionsResult, labsResult] = await Promise.all([
       BaseCrudService.getAll<TreatmentPlans>('treatmentplans'),
@@ -59,6 +64,16 @@ export default function PatientDetailPage() {
       _id: plan._id,
       currentStatus: newStatus
     });
+  };
+
+  const saveComplications = async () => {
+    if (!patient) return;
+    setPatient({ ...patient, currentComplications: editedComplications });
+    await BaseCrudService.update('patients', {
+      _id: patient._id,
+      currentComplications: editedComplications
+    });
+    setIsEditingComplications(false);
   };
 
   if (isLoading) {
@@ -170,12 +185,53 @@ export default function PatientDetailPage() {
               </div>
 
               <div className="md:col-span-2 bg-backgrounddark p-8">
-                <h2 className="font-heading text-3xl text-secondary-foreground mb-6">
-                  Current Complications
-                </h2>
-                <p className="font-paragraph text-base text-secondary-foreground">
-                  {patient.currentComplications || 'No current complications'}
-                </p>
+                <div className="flex items-start justify-between mb-4">
+                  <h2 className="font-heading text-3xl text-secondary-foreground">
+                    Current Complications
+                  </h2>
+                  {!isEditingComplications && (
+                    <button
+                      onClick={() => setIsEditingComplications(true)}
+                      className="flex items-center gap-2 text-secondary-foreground hover:text-primary transition-colors"
+                    >
+                      <Edit2 size={18} />
+                      <span className="font-paragraph text-sm">Edit</span>
+                    </button>
+                  )}
+                </div>
+                {isEditingComplications ? (
+                  <div className="space-y-4">
+                    <textarea
+                      value={editedComplications}
+                      onChange={(e) => setEditedComplications(e.target.value)}
+                      rows={4}
+                      className="w-full px-4 py-3 border-2 border-secondary font-paragraph text-base text-secondary focus:outline-none focus:border-primary resize-none"
+                    />
+                    <div className="flex gap-2">
+                      <button
+                        onClick={saveComplications}
+                        className="flex items-center gap-2 bg-primary text-primary-foreground font-paragraph text-sm px-4 py-2 hover:bg-accentbluelight transition-colors"
+                      >
+                        <Save size={16} />
+                        Save
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsEditingComplications(false);
+                          setEditedComplications(patient?.currentComplications || '');
+                        }}
+                        className="flex items-center gap-2 bg-secondary text-secondary-foreground font-paragraph text-sm px-4 py-2 hover:bg-secondary/80 transition-colors"
+                      >
+                        <X size={16} />
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="font-paragraph text-base text-secondary-foreground">
+                    {patient?.currentComplications || 'No current complications'}
+                  </p>
+                )}
               </div>
             </motion.div>
           )}

@@ -39,9 +39,14 @@ export default function PatientPortalPage() {
         BaseCrudService.getAll<LabReports>('labreports')
       ]);
 
-      setTreatmentPlans(treatmentsResult.items);
-      setPrescriptions(prescriptionsResult.items);
-      setLabReports(labsResult.items);
+      // Filter records by patientId
+      const patientTreatments = treatmentsResult.items.filter(t => t.patientId === foundPatient._id);
+      const patientPrescriptions = prescriptionsResult.items.filter(p => p.patientId === foundPatient._id);
+      const patientLabs = labsResult.items.filter(l => l.patientId === foundPatient._id);
+
+      setTreatmentPlans(patientTreatments);
+      setPrescriptions(patientPrescriptions);
+      setLabReports(patientLabs);
     } else {
       setError('Patient not found. Please check your name and mobile number.');
       setPatient(null);
